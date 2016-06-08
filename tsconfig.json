@@ -30,6 +30,7 @@
         "src/components/content/content_spec.ts",
         "src/components/data-table/data_table.ts",
         "src/components/data-table/data_table_selectable_tr.ts",
+        "src/components/data-table/data_table_sort.ts",
         "src/components/data-table/data_table_spec.ts",
         "src/components/data-table/index.ts",
         "src/components/dialog/dialog-actions.ts",
