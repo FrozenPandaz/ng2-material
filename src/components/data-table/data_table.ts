@@ -3,7 +3,6 @@ import 'rxjs/add/operator/share';
 import {MdDataTableHeaderSelectableRow, MdDataTableSelectableRow, ITableSelectableRowSelectionChange} from './data_table_selectable_tr';
 
 export * from './data_table_selectable_tr';
-export * from './data_table_sort';
 
 /**
  * Selectable change event data
