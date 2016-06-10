@@ -46,14 +46,14 @@ export * from './column-sort.service';
  *
  * <hljs lang="html">
  *  <tr>
- *    <th mdDataSortColumn="1">Cheese</th>
- *    <th mdDataSortColumn="2">Crackers</th>
- *    <th mdDataSortColumn="3">Wine</th>
+ *    <th md-data-sort-column="1">Cheese</th>
+ *    <th md-data-sort-column="2">Crackers</th>
+ *    <th md-data-sort-column="3">Wine</th>
  *  <tr>
  * </hljs>
  */
 @Directive({
-  selector: '[mdDataSortColumn]'
+  selector: '[md-data-sort-column]'
 })
 export class MdDataSortColumnDirective implements OnDestroy, OnInit {
 
@@ -65,7 +65,7 @@ export class MdDataSortColumnDirective implements OnDestroy, OnInit {
   sortingSubscription: Subscription;
 
   /** Unique column identifier */
-  @Input() mdDataSortColumn: string;
+  @Input('md-data-sort-column') mdDataSortColumn: string;
 
   /** Applies 'sortable' CSS class to host */
   @HostBinding('class.sortable') get sortable() { return true; }

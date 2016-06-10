@@ -29,9 +29,9 @@ export function main() {
     <table>
       <thead>
         <tr>
-          <th mdDataSortColumn="1">Wine</th>
-          <th mdDataSortColumn="2">Cheese</th>
-          <th mdDataSortColumn="3">Crackers</th>
+          <th md-data-sort-column="1">Wine</th>
+          <th md-data-sort-column="2">Cheese</th>
+          <th md-data-sort-column="3">Crackers</th>
         </tr>
       </thead>
     </table>`
@@ -150,7 +150,7 @@ export function main() {
 
     it('notifies the MdDataColumnSortingService on click', () => {
       let secondColumn:MdDataSortColumnDirective = testCmp.columns.toArray()[1],
-        secondHost = fixture.nativeElement.querySelector('th[mdDataSortColumn="2"]'),
+        secondHost = fixture.nativeElement.querySelector('th[md-data-sort-column="2"]'),
         clickSpy = spyOn(secondColumn, 'sortBy').and.callThrough(),
         changeSpy = spyOn(testCmp.sortingService, 'changeSorting').and.callThrough();
 
@@ -166,9 +166,9 @@ export function main() {
 
     it('styles it\'s host according to sorting state', () => {
       let el = fixture.nativeElement,
-        first = el.querySelector('th[mdDataSortColumn="1"]'),
-        seconnd = el.querySelector('th[mdDataSortColumn="2"]'),
-        third = el.querySelector('th[mdDataSortColumn="3"]');
+        first = el.querySelector('th[md-data-sort-column="1"]'),
+        seconnd = el.querySelector('th[md-data-sort-column="2"]'),
+        third = el.querySelector('th[md-data-sort-column="3"]');
 
       //it finds class "sortable on it's host elements:
       expect(first.classList.contains('sortable')).toBe(true);;
