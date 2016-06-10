@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {
-  DataSortDirection,
-  SortingColumn
+  SortDirection,
+  IColumnSortingModel
 } from './column-sort';
 
 /**
@@ -10,7 +10,7 @@ import {
  */
 @Injectable()
 export class MdDataColumnSortingService {
-  public sortingColumn:Subject<SortingColumn>
+  public sortingColumn:Subject<IColumnSortingModel>
 
   constructor() {
     this.sortingColumn = new Subject();
@@ -20,7 +20,7 @@ export class MdDataColumnSortingService {
    * Programatically set the column / direction of sorting
    * @param sorting - column & direction to sort by.
    */
-  public setSorting(sorting: SortingColumn) {
+  public setSorting(sorting: IColumnSortingModel) {
     this.sortingColumn.next(sorting);
   }
 
@@ -30,20 +30,19 @@ export class MdDataColumnSortingService {
    * @param id - identifier of column to sort by
    * @param sorting - current sorting information
    */
-  public changeSorting(fromId:number, sorting:SortingColumn) {
-
-    let newSort: SortingColumn = {
+  public changeSorting(fromId:string, sorting:IColumnSortingModel) {
+    let newSort: IColumnSortingModel = {
       column: fromId,
-      direction: DataSortDirection.ASCEND
+      direction: SortDirection.ASCEND
     };
 
     if (sorting.column === fromId) {
       // invert currently selected column
-      sorting.direction = sorting.direction === DataSortDirection.DESCEND ?
-          DataSortDirection.ASCEND : DataSortDirection.DESCEND;
+      newSort.direction = sorting.direction === SortDirection.DESCEND ?
+          SortDirection.ASCEND : SortDirection.DESCEND;
     } else {
       //sort by new column
-      sorting.direction = DataSortDirection.ASCEND;
+      newSort.direction = SortDirection.ASCEND;
     }
 
     this.setSorting(newSort);

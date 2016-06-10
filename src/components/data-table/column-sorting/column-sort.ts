@@ -5,14 +5,14 @@
 /**
  * Specifies sorting direction
  */
-export enum DataSortDirection {
+export enum SortDirection {
   ASCEND, DESCEND
 }
 
 /**
  * Sorting model.
  */
-export interface SortingColumn {
-  column: number;
-  direction: DataSortDirection;
+export interface IColumnSortingModel {
+  column: string;
+  direction: SortDirection;
 }

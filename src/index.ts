@@ -5,7 +5,8 @@ import {
   MdDataTable,
   MdDataTableHeaderSelectableRow,
   MdDataTableSelectableRow,
-  MdDataSortColumnDirective
+  MdDataSortColumnDirective,
+  MdDataColumnSortingService
 } from "./components/data-table/index";
 import {MdDialog, MdDialogTitle, MdDialogActions, MdDialogPortal} from "./components/dialog/index";
 import {MdDivider} from "./components/divider/divider";
@@ -69,7 +70,7 @@ export * from './core/util/animate';
 export const MATERIAL_DIRECTIVES: any[] = [
   MdAnchor, MdButton,
   MdContent,
-  MdDataTable, MdDataTableHeaderSelectableRow, MdDataTableSelectableRow,
+  MdDataTable, MdDataTableHeaderSelectableRow, MdDataTableSelectableRow, MdDataSortColumnDirective,
   MdDivider,
   MdBackdrop,
   MdDialog, MdDialogActions, MdDialogTitle, MdDialogPortal,

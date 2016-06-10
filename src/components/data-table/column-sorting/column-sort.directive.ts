@@ -13,14 +13,22 @@ import {
   Injectable,
   OnDestroy,
   OnInit
-} from "angular2/core";
-// import {isPresent} from "angular2/src/facade/lang";
+} from "@angular/core";
+import {
+  beforeEach,
+  describe,
+  expect,
+  inject,
+  it,
+  async
+} from "@angular/core/testing";
+import {ComponentFixture, TestComponentBuilder} from "@angular/compiler/testing";
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/map';
 import {Subscription} from 'rxjs/Subscription';
 import {
-  DataSortDirection,
-  SortingColumn
+  SortDirection,
+  IColumnSortingModel
 } from './column-sort';
 import {MdDataColumnSortingService} from './column-sort.service';
 export * from './column-sort.service';
@@ -38,14 +46,14 @@ export * from './column-sort.service';
  *
  * <hljs lang="html">
  *  <tr>
- *    <td md-data-sort-column="1">Cheese</td>
- *    <td md-data-sort-column="2">Crackers</td>
- *    <td md-data-sort-column="3">Wine</td>
+ *    <th mdDataSortColumn="1">Cheese</th>
+ *    <th mdDataSortColumn="2">Crackers</th>
+ *    <th mdDataSortColumn="3">Wine</th>
  *  <tr>
  * </hljs>
  */
 @Directive({
-  selector: '[md-data-sort-column]'
+  selector: '[mdDataSortColumn]'
 })
 export class MdDataSortColumnDirective implements OnDestroy, OnInit {
 
@@ -53,23 +61,23 @@ export class MdDataSortColumnDirective implements OnDestroy, OnInit {
    * Sorting value of the group of columns.
    * The group is defined by the injection scope of the {@link MdDataColumnSortingService} in the parent component.
    */
-  sortingColumn: SortingColumn;
+  sortingColumn: IColumnSortingModel;
   sortingSubscription: Subscription;
 
   /** Unique column identifier */
-  @Input() mdDataSortColumn: number;
+  @Input() mdDataSortColumn: string;
 
   /** Applies 'sortable' CSS class to host */
   @HostBinding('class.sortable') get sortable() { return true; }
 
   /** Conditionally applies 'sort-ascending' CSS class to host */
   @HostBinding('class.sort-ascending') get sortingAscending() {
-    return this.sortingColumn.column == this.mdDataSortColumn && this.sortingColumn.direction === DataSortDirection.ASCEND
+    return this.isCurrentColumn() && this.sortingColumn.direction === SortDirection.ASCEND;
   }
 
   /** Conditionally applies 'sorted-descending' CSS class to host */
   @HostBinding('class.sorted-descending') get sortingDescending() {
-    return this.sortingColumn.column == this.mdDataSortColumn && this.sortingColumn.direction === DataSortDirection.DESCEND;
+    return this.isCurrentColumn() && this.sortingColumn.direction === SortDirection.DESCEND;
   }
 
   /**
@@ -80,26 +88,21 @@ export class MdDataSortColumnDirective implements OnDestroy, OnInit {
     this.sortingService.changeSorting(this.mdDataSortColumn, this.sortingColumn);
   }
 
-  // @Output() sort: EventEmitter<Sorting> = new EventEmitter(false);
+  // @Output() sort: EventEmitter<Sorting> = new EventEmitter(false); //need?
 
-  constructor(private sortingService: MdDataColumnSortingService) { }
-
-  ngOnInit() {
+  constructor(private sortingService: MdDataColumnSortingService) {
     this.sortingSubscription = this.sortingService.sortingColumn.subscribe(
-        (sorting: SortingColumn) => this.sortingColumn = sorting);
+        (sorting: IColumnSortingModel) => this.sortingColumn = sorting);
   }
 
-  //TODO remove if not needed.
-  onSortChange(sorting: SortingColumn) {
-    // Do I need a callback such as this in the above subscription,
-    // or can I update the property and let change detection do it's thing?
-    // Is there an 'async property' akin to async pipe in a template?
-    this.sortingColumn = sorting;
-  }
-
+  ngOnInit() { }
 
   ngOnDestroy() {
     this.sortingSubscription.unsubscribe();
+  }
+
+  private isCurrentColumn():boolean {
+    return this.sortingColumn && this.sortingColumn.column == this.mdDataSortColumn
   }
 
 }
